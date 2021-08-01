@@ -24,6 +24,7 @@ public class MotorMapper implements RowMapper<MotorModel>{
 			motor.setRate(resultSet.getDouble("rate"));
 			motor.setAnnualPremium(resultSet.getDouble("annualPremium"));
 			motor.setPostedPremium(resultSet.getDouble("postedPremium"));
+			motor.setStatus(resultSet.getString("status"));
 			return motor;
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -19,6 +19,11 @@
 				<!-- /.breadcrumb -->
 			</div>
 			<div class="page-content">
+			 	<c:if test="${not empty messageResponse}">
+					<div class="alert alert-${alert}">
+  						${messageResponse}
+					</div>
+				</c:if>
 				<div class="widget-box table-filter">
 					<div class="table-btn-controls">
 						<div class="pull-right tableTools-container">
@@ -57,12 +62,13 @@
 									<th>Rate</th>
 									<th>Annual Premium</th>
 									<th>Posted Premium</th>
+									<th>Status</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="item" items="${model.listResult}">
 									<tr>
-										<td>${item.policyNo}</td>
+										<td><c:out value="${item.policyNo}" /></td>
 										<td>${item.inceptionDate}</td>
 										<td>${item.expiryDate}</td>
 										<td>${item.policyOwner}</td>
@@ -74,18 +80,25 @@
 										<td>${item.rate}</td>
 										<td>${item.annualPremium}</td>
 										<td>${item.postedPremium}</td>
-										
+										<c:if test = "${item.status == 1}">
+									         <td>Pending</td>
+									     </c:if>
+										<c:if test = "${item.status != 1}">
+									         <td>In force</td>
+									     </c:if>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-						<input type="hidden" value="list" id="type" name="type" /> 
-
+						<input type="hidden" value="list" id="list" name="list"/>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- /.main-content -->
+	<script>
+
+	</script>
 </body>
 </html>

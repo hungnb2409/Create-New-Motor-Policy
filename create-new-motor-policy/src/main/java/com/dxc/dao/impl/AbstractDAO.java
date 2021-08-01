@@ -1,11 +1,12 @@
 package com.dxc.dao.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -14,7 +15,7 @@ import com.dxc.dao.GenericDAO;
 import com.dxc.mapper.RowMapper;
 
 public class AbstractDAO<T> implements GenericDAO<T> {
-	
+
 	ResourceBundle resourceBundle = ResourceBundle.getBundle("db");
 
 	public Connection getConnection() {
@@ -64,25 +65,75 @@ public class AbstractDAO<T> implements GenericDAO<T> {
 		}
 	}
 
-	private void setParameter(PreparedStatement statement, Object... parameters)
-	  { 
-		try { 
-			for (int i = 0; i < parameters.length; i++) { 
-				Object parameter = parameters[i]; 
-				int index = i + 1; 
+	private void setParameter(PreparedStatement statement, Object... parameters) {
+		try {
+			System.out.print(parameters.length);
+			for (int i = 0; i < parameters.length; i++) {
+				Object parameter = parameters[i];
+				int index = i + 1;
 				if (parameter instanceof Long) {
-					statement.setLong(index, (Long) parameter); 
+					statement.setLong(index, (Long) parameter);
 				} else if (parameter instanceof String) {
-					statement.setString(index, (String) parameter); 
-				} else if (parameter instanceof Date) { 
-					statement.setDate(index, (Date) parameter);
-				} else if (parameter instanceof Integer) { 
+					statement.setString(index, (String) parameter);
+				} else if (parameter instanceof Date) {
+					statement.setDate(index, new java.sql.Date(((Date) parameter).getTime()));
+				} else if (parameter instanceof Integer) {
 					statement.setInt(index, (Integer) parameter);
-					} 
-				} 
-			}catch (SQLException e) {
-				e.printStackTrace();  
+				}else if (parameter instanceof Double) {
+					statement.setDouble(index, (Double)parameter);
+				}
+			}
+		} catch (SQLException e) {
+			System.out.print(e);
+			e.printStackTrace();
+		}
+
 	}
 
+	@Override
+	public Long insert(String sql, Object... parameters) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		try {
+			Long id = null;
+			connection = getConnection();
+			connection.setAutoCommit(false);
+			statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			setParameter(statement, parameters);
+			System.out.print("run here 2");
+			statement.executeUpdate();
+			System.out.print("run here 3");
+			resultSet = statement.getGeneratedKeys();
+			if (resultSet.next()) {
+				id = resultSet.getLong(1);
+			}
+			connection.commit();
+			return id;
+		} catch (SQLException e) {
+			System.out.print(e);
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e2) {
+				e2.printStackTrace();
+			}
+		}
+		return null;
 	}
 }

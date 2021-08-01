@@ -1,6 +1,6 @@
 package com.dxc.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class MotorModel extends AbstractModel<MotorModel>{
 	
@@ -16,6 +16,7 @@ public class MotorModel extends AbstractModel<MotorModel>{
 	private double rate;
 	private double annualPremium;
 	private double postedPremium;
+	private String status;
 	
 	public String getPolicyNo() {
 		return policyNo;
@@ -88,6 +89,12 @@ public class MotorModel extends AbstractModel<MotorModel>{
 	}
 	public void setPostedPremium(double postedPremium) {
 		this.postedPremium = postedPremium;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

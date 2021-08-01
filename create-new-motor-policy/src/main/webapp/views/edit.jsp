@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
+<c:url var="ListURL" value="/motor-list"/>
 
 <html>
 <head>
@@ -36,7 +37,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right">Inception Date</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inceptionDate" name="inceptionDate" value="${model.inceptionDate}"/>
+                                    <input type="date" class="form-control" id="inceptionDate" name="inceptionDate" value="${model.inceptionDate}"/>
                                 </div>
                             </div>
                             <br/>
@@ -44,7 +45,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right">Expiry Date</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="expiryDate" name="expiryDate" value="${model.expiryDate}"/>
+                                    <input type="date" class="form-control" id="expiryDate" name="expiryDate" value="${model.expiryDate}"/>
                                 </div>
                             </div>
                             <br/>
@@ -128,7 +129,7 @@
                                     <input type="button" class="btn btn-white btn-warning btn-bold" value="Issue" id="btnIssue"/>
                                 </div>
                             </div>
-                            <input type="hidden" value="edit" id="type" name="type"/>
+                            <input type="hidden" value="edit" id="edit" name="edit"/>
                         </form>
                 </div>
             </div>
@@ -136,6 +137,57 @@
     </div>
 </div>
 <script>
+
+	$('#btnAddMotor').click(function (e) {
+        e.preventDefault();
+        var data = {};
+        var formData = $('#formSubmit').serializeArray();
+        $.each(formData, function (i, v) {
+            data[""+v.name+""] = v.value;
+        });
+        var id = $('#id').val();
+        if (id == undefined) {
+            addMotor(data);
+        }
+    });
+    function addMotor(data) {
+        $.ajax({
+            url: '/create-new-motor-policy/motor-list',
+            type: 'POST',
+            contentType: "application/json", 
+            data: JSON.stringify(data),
+            success: function (result) {
+            	window.location.href = "${ListURL}?type=edit&message=insert_success";
+            },
+            error: function (error) {
+            	window.location.href = "${ListURL}message=error_system";
+            	console.log(error);
+            }
+        });
+    }
+
+	/*$("#btnAddMotor").click(function() {		
+		$.ajax({
+			url: "edit.jsp",
+			type: "post",
+			data: {
+				inceptionDate:$('#inceptionDate').val(),
+				expiryDate:$('#expiryDate').val(),
+				policyOwner:$('#policyOwner').val(),
+				engineNo:$('#engineNo').val(),
+				chassisNo:$('#chassisNo').val(),
+				vehicleRegistrationNo:$('#vehicleRegistrationNo').val(),
+				billingCurrency:$('#billingCurrency').val(),
+				sumInsured:$('#sumInsured').val(),
+				rate:$('#rate').val(),
+				annualPremium:$('#annualPremium').val(),
+				postedPremium:$('#postedPremium').val(),
+				success : function(data){
+					alert(data);
+				}
+			}
+		}); 
+	});*/
 	
 </script>
 </body>

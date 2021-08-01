@@ -16,8 +16,17 @@ public class MotorDAO extends AbstractDAO<MotorModel> implements IMotorDAO {
 
 	@Override
 	public Long save(MotorModel motorModel) {
-		String sql = "INSERT INTO motor ()";
-		return null;
+		StringBuffer sql = new StringBuffer("INSERT INTO Motor (inceptionDate, expiryDate,");
+		sql.append("policyOwner, engineNo, chassisNo, vehicleRegistrationNo, billingCurrency,");
+		sql.append("sumInsured, rate, annualPremium, postedPremium, status)");
+		sql.append("VALUES(?,?,?,?,?,?,?,?,?,?,?,?)");
+		System.out.print(motorModel.getSumInsured());
+		System.out.print(motorModel.getRate());
+		return insert(sql.toString(), motorModel.getInceptionDate(), motorModel.getExpiryDate(),
+				motorModel.getPolicyOwner(), motorModel.getEngineNo(), motorModel.getChassisNo(),
+				motorModel.getVehicleRegistrationNo(), motorModel.getBillingCurrency(),
+				motorModel.getSumInsured(), motorModel.getRate(), motorModel.getAnnualPremium(), 
+				motorModel.getPostedPremium(), motorModel.getStatus());
 	}
 
 	@Override
@@ -41,7 +50,7 @@ public class MotorDAO extends AbstractDAO<MotorModel> implements IMotorDAO {
 
 	@Override
 	public List<MotorModel> finAll() {
-		String sql = "SELECT * FROM motor";
+		String sql = "SELECT * FROM motor order by id";
 		return query(sql, new MotorMapper());
 	}
 }
