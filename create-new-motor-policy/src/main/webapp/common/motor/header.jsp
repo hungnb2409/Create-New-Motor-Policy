@@ -5,28 +5,15 @@
 <div id="navbar" class="navbar navbar-default          ace-save-state">
     <div class="navbar-container ace-save-state" id="navbar-container">
         <div class="navbar-header pull-left">
-            <a href="#" class="navbar-brand">
-           		 <link rel="icon" href="c:url value='/template/motor/logo/logo.png'">
-                    <!-- MOTOR -->
+            <a href='<c:url value="/motor-list?type=list"/>' class="navbar-brand">
+                    <h1><a href="https://lh3.googleusercontent.com/uqegF1OmBnYnY1LWFnkuTL4LxDns4LEoRusZDMTWh7aeOcDc_6bXP69Lh_7teH8Di6ueOfWQMCvqoBBKpTMvmoeF9hUFAqRemEdvuHXJ8g5h_ZxLMkVkJSZU0lISAvRWq-Ev2i8u=s225-p-k?source=screenshot.guru"> <img src="https://lh3.googleusercontent.com/uqegF1OmBnYnY1LWFnkuTL4LxDns4LEoRusZDMTWh7aeOcDc_6bXP69Lh_7teH8Di6ueOfWQMCvqoBBKpTMvmoeF9hUFAqRemEdvuHXJ8g5h_ZxLMkVkJSZU0lISAvRWq-Ev2i8u=s225-p-k" width="120px" height="60px" /> </a></h1>
                 <small>
-                    
+                   <!--  -->
                 </small>
             </a>
         </div>
         <div class="navbar-buttons navbar-header pull-right collapse navbar-collapse" role="navigation">
-            <ul class="nav ace-nav">
-                <li class="light-blue dropdown-modal">
-                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        Xin chào, [Motor]
-                    </a>
-                    <li class="light-blue dropdown-modal">
-                        <a href='<c:url value="/thoat?action=logout"/>'>
-                            <i class="ace-icon fa fa-power-off"></i>
-                            Thoát
-                        </a>
-                    </li>
-                </li>
-            </ul>
+          
         </div>
     </div>
 </div>

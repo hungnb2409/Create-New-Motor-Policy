@@ -8,7 +8,7 @@ import com.dxc.dao.IClientDAO;
 import com.dxc.model.ClientModel;
 import com.dxc.service.IClientService;
 
-public class ClientService implements IClientService{
+public class ClientServiceImpl implements IClientService{
 
 	@Inject
 	private IClientDAO clientDAO;

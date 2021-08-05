@@ -1,45 +1,45 @@
-CREATE DATABASE [Policy]
+CREATE DATABASE Test
 GO
-
-CREATE TABLE [dbo].[Client](
-	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[Client Number]  AS ('CN'+right('00000000'+CONVERT([varchar](6),[ID]),(6))) PERSISTED NOT NULL,
-	[First Name] [nvarchar](60) NOT NULL,
-	[Last Name] [nvarchar](60) NOT NULL,
-	[Gender] [varchar](30) NOT NULL,
-	[Date of Birth] [date] NOT NULL,
-	[Indentity Number] [varchar](30) NOT NULL,
-	[Marital Status] [varchar](30) NOT NULL,
-	[Address] [nvarchar](120) NOT NULL,
-	[Country] [varchar](30) NOT NULL,
- CONSTRAINT [PK_Client] PRIMARY KEY CLUSTERED 
-(
-	[Client Number] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
+USE Test
 GO
+CREATE TABLE client(
+	id int IDENTITY(1,1) NOT NULL,
+	clientnumber  AS ('CN'+right('000000'+CONVERT([varchar](6),[ID]),(6))) PERSISTED NOT NULL PRIMARY KEY,
+	firstname nvarchar(60) NOT NULL,
+	lastname nvarchar(60) NOT NULL,
+	gender varchar(30) NOT NULL,
+	dateofbirth date NOT NULL,
+	indentitynumber varchar(30) NOT NULL,
+	maritalstatus varchar(30) NOT NULL,
+	address nvarchar(120) NOT NULL,
+	country varchar(30) NOT NULL,
+)
 
+CREATE TABLE motor(
+	id [INT] IDENTITY(1,1) NOT NULL,
+	policyno AS ('MT'+right('000000'+CONVERT([varchar](6),[ID]),(6))) PERSISTED NOT NULL PRIMARY KEY,
+	inceptiondate DATE NOT NULL,
+	expirydate DATE NOT NULL,
+	policyowner VARCHAR(8) NOT NULL,
+	engineno VARCHAR(30) NOT NULL,
+	chassisno VARCHAR(30) NOT NULL,
+	vehicleregistrationno VARCHAR(30) NOT NULL,
+	billingcurrency VARCHAR(30) NOT NULL,
+	suminsured NUMERIC(17,2) NOT NULL,
+	rate NUMERIC(7,5) NOT NULL,
+	annualpremium NUMERIC(17,2) NULL,
+	postedpremium NUMERIC(17,2) NULL,
 
-CREATE TABLE [dbo].[Motor](
-	[ID] [INT] IDENTITY(1,1) NOT NULL,
-	[Policy No] AS ('MT'+right('00000000'+CONVERT([varchar](6),[ID]),(6))) PERSISTED NOT NULL,
-	[Inception Date] [DATE] NOT NULL,
-	[Expiry Date] [DATE] NOT NULL,
-	[Policy Owner] [VARCHAR](8) NOT NULL,
-	[Engine No] [VARCHAR](30) NOT NULL,
-	[Chassis No] [VARCHAR](30) NOT NULL,
-	[Vehicle Registration No] [VARCHAR](30) NOT NULL,
-	[Billing Currency] [VARCHAR](30) NOT NULL,
-	[Sum Insured] [NUMERIC](17,2) NOT NULL,
-	[Rate] [NUMERIC](7,5) NOT NULL,
-	[Annual Premium] [NUMERIC](17,2) NULL,
-	[Posted Premium] [NUMERIC](17,2) NULL,
-	CONSTRAINT [PK_Motor] PRIMARY KEY CLUSTERED 
-(
-	[Policy No] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
+)
+ALTER TABLE motor ADD CONSTRAINT fk_motor_client FOREIGN KEY (policyowner) REFERENCES client(clientnumber);
 
-ALTER TABLE [dbo].[Motor]
-ADD FOREIGN KEY ([Policy Owner]) REFERENCES [dbo].[Client]([Client Number]);
+ALTER TABLE motor ADD status VARCHAR(15);
+
+DROP TABLE motor 
+DROP TABLE client
+
+SET IDENTITY_INSERT client ON
+INSERT INTO client (id, firstname, lastname, gender, dateofbirth, indentitynumber, maritalstatus, address, country) VALUES (1, N'Luan', N'Nguyen Thanh', 'Male', CAST(N'1999-12-01' AS Date), N'175409876', 'Single', N'15 Dinh Tien Hoang', 'Viet Nam');
+INSERT INTO client (id, firstname, lastname, gender, dateofbirth, indentitynumber, maritalstatus, address, country) VALUES (2, N'Mai', N'Bui Thi Ngoc', 'Female', CAST(N'1999-12-12' AS Date), N'165809345', 'Single', N'136 Dong Da', 'United Staties')
+INSERT INTO client (id, firstname, lastname, gender, dateofbirth, indentitynumber, maritalstatus, address, country) VALUES (3, N'An', N'Nguyen Thi Thinh', 'Female', CAST(N'1999-12-21' AS Date), N'200377765', 'Divorced', N'32 Wall Street', 'Singapore')
+INSERT INTO client (id, firstname, lastname, gender, dateofbirth, indentitynumber, maritalstatus, address, country) VALUES (4, N'Nguyen', N'Vu', 'Male', CAST(N'2000-04-30' AS Date), N'340989875', 'Married', N'03 Washington', 'Viet Nam')

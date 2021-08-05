@@ -1,3 +1,4 @@
+<%@page import="java.awt.event.ItemEvent"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
@@ -13,7 +14,7 @@
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
 				<ul class="breadcrumb">
-					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="#">Trang
+					<li><i class="ace-icon fa fa-home home-icon"></i> <a href="<c:url value="/motor-list?type=list"/>">Trang
 							chủ MOTOR</a></li>
 				</ul>
 				<!-- /.breadcrumb -->
@@ -63,6 +64,7 @@
 									<th>Annual Premium</th>
 									<th>Posted Premium</th>
 									<th>Status</th>
+									<th>Edit</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -86,11 +88,22 @@
 										<c:if test = "${item.status != 1}">
 									         <td>In force</td>
 									     </c:if>
+									   <td>
+										<c:url var="editURL" value="/motor-list">
+											<c:param name="type" value="edit"/>
+											<c:param name="id" value="${item.id}"/>
+											<c:param name="status" value="${item.status}"/>
+										</c:url>
+											<a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
+												title="Update" href='${editURL}' <c:if test="${item.status != 1}"><c:out value="disabled='disabled'"/></c:if>">
+												<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+											</a>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-						<input type="hidden" value="list" id="list" name="list"/>
+						<input type="hidden" value="list" id="type" name="type"/>
 					</div>
 				</div>
 			</div>
