@@ -37,8 +37,6 @@ public class MotorController extends HttpServlet {
 			throws ServletException, IOException {
 		MotorModel model = new MotorModel();
 		String typeParameter = request.getParameter("type");
-		
-		
 		if (typeParameter.equals(SystemConstant.LIST)) {
 			model.setListResult(motorService.findAll());
 			request.setAttribute(SystemConstant.MODEL, model);
@@ -64,8 +62,7 @@ public class MotorController extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			JsonObject data = new Gson().fromJson(request.getReader(), JsonObject.class);
-			JSONObject content = new JSONObject();
-			
+			JSONObject content = new JSONObject();	
 			MotorModel model = motorService.update(data);
 			if(model == null) {
 				content.put("id", "");
@@ -76,8 +73,6 @@ public class MotorController extends HttpServlet {
 				content.put("message", "update_success");
 				content.put("iSuccess", true);
 			}
-			
-
 			response.setContentType("application/json");
 			response.getWriter().write(content.toString());
 		} catch (JsonSyntaxException e) {
@@ -87,8 +82,6 @@ public class MotorController extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -114,16 +107,12 @@ public class MotorController extends HttpServlet {
 			response.setContentType("application/json");
 			response.getWriter().write(content.toString());
 		} catch (JsonSyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JsonIOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

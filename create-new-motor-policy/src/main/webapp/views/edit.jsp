@@ -163,12 +163,7 @@
                                         <input type="button" class="btn btn-white btn-warning btn-bold" value="Refresh" id="btnRefreshMotor" /> 
                                         <input type="button" class="btn btn-white btn-warning btn-bold" value="Issue" id="btnIssue" />
                                     </c:if>
-									<!-- <input type="button" class="btn btn-white btn-warning btn-bold"
-										value="Save" id="btnSaveMotor" /> <input type="button"
-										class="btn btn-white btn-warning btn-bold" value="Refresh"
-										id="btnRefreshMotor" /> <input type="button"
-										class="btn btn-white btn-warning btn-bold" value="Issue"
-										id="btnIssue" /> -->
+									
 								</div>
 								
 							</div>
