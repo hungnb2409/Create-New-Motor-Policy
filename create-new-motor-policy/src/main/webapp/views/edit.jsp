@@ -233,7 +233,7 @@
 					contentType : "application/json",
 					data : JSON.stringify(data),
 					success : function(result) {
-						if(result.isSuccess)
+						if(result.iSuccess)
 							window.location.href = "${ListURL}?type=edit&id="+result.id+"&message=update_success&contentMessage="+result.message;
 						else{
 							window.location.href = "${ListURL}?type=edit&id="+result.id+"&message=update_error&contentMessage="+result.message;
